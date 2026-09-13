@@ -1,3 +1,5 @@
 ﻿node_modules/
 .env
 google-credentials.json
+backend/google-sheets-puerto-vivero.json
+backend/google-credentials.json

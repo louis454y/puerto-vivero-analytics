@@ -12,6 +12,7 @@ GOOGLE SHEETS → POSTGRESQL
 */
 
 const SPREADSHEET_ID =
+    process.env.GOOGLE_SPREADSHEET_ID ||
     process.env.GOOGLE_SHEETS_ID ||
     "1PVG6zD78bWhm2qpEiQU0cdNRqxJWrYUNPh7DSlHlwvM";
 
@@ -35,21 +36,47 @@ function cargarCredenciales() {
     */
 
     if (process.env.GOOGLE_CREDENTIALS_JSON) {
-
         try {
-
             return JSON.parse(
                 process.env.GOOGLE_CREDENTIALS_JSON
             );
-
         } catch (error) {
-
             throw new Error(
                 "GOOGLE_CREDENTIALS_JSON no contiene un JSON válido."
             );
         }
     }
 
+    /*
+    --------------------------------------------------------
+    SECRET FILE DE RENDER
+    --------------------------------------------------------
+    */
+
+    const rutaRender =
+        "/etc/secrets/google-credentials.json";
+
+    if (fs.existsSync(rutaRender)) {
+        try {
+
+            const contenido =
+                fs.readFileSync(
+                    rutaRender,
+                    "utf8"
+                );
+
+            return JSON.parse(
+                contenido
+            );
+
+        } catch (error) {
+
+            throw new Error(
+                "No se pudo leer correctamente el Secret File de Google en Render."
+            );
+
+        }
+    }
 
     /*
     --------------------------------------------------------
@@ -77,7 +104,6 @@ function cargarCredenciales() {
 
     ];
 
-
     for (const ruta of posiblesRutas) {
 
         if (fs.existsSync(ruta)) {
@@ -99,18 +125,19 @@ function cargarCredenciales() {
                 throw new Error(
                     `No se pudo leer correctamente el archivo de credenciales: ${ruta}`
                 );
-            }
-        }
-    }
 
+            }
+
+        }
+
+    }
 
     throw new Error(
         "No se encontraron las credenciales de Google. " +
-        "Coloca google-credentials.json en backend " +
-        "o configura GOOGLE_CREDENTIALS_JSON."
+        "Configura GOOGLE_CREDENTIALS_JSON o agrega " +
+        "google-credentials.json como Secret File en Render."
     );
 }
-
 
 /*
 ============================================================
