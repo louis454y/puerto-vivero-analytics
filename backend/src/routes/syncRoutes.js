@@ -1,24 +1,24 @@
 const express = require("express");
-const { sincronizarExcel } = require("../services/syncExcel");
+const { sincronizarGoogleSheets } = require("../services/syncGoogleSheets");
 
 const router = express.Router();
 
-router.post("/excel", async (req, res) => {
+router.post("/google-sheets", async (req, res) => {
     try {
-        const resultado = await sincronizarExcel();
+        const resultado = await sincronizarGoogleSheets();
 
         res.json({
             ok: true,
-            mensaje: "Sincronización completada correctamente",
+            mensaje: "Sincronización desde Google Sheets completada correctamente",
             resultado
         });
 
     } catch (error) {
-        console.error("Error sincronizando Excel:", error);
+        console.error("Error sincronizando Google Sheets:", error);
 
         res.status(500).json({
             ok: false,
-            mensaje: "No se pudo sincronizar el Excel",
+            mensaje: "No se pudo sincronizar Google Sheets",
             error: error.message
         });
     }
