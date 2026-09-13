@@ -1,3 +1,4 @@
+
 const fs = require("fs");
 const path = require("path");
 const { google } = require("googleapis");
@@ -31,21 +32,28 @@ function cargarCredenciales() {
 
     /*
     --------------------------------------------------------
-    PRODUCCIÓN / RENDER
+    PRODUCCIÓN / RENDER - VARIABLE DE ENTORNO
     --------------------------------------------------------
     */
 
     if (process.env.GOOGLE_CREDENTIALS_JSON) {
+
         try {
+
             return JSON.parse(
                 process.env.GOOGLE_CREDENTIALS_JSON
             );
+
         } catch (error) {
+
             throw new Error(
                 "GOOGLE_CREDENTIALS_JSON no contiene un JSON válido."
             );
+
         }
+
     }
+
 
     /*
     --------------------------------------------------------
@@ -56,7 +64,28 @@ function cargarCredenciales() {
     const rutaRender =
         "/etc/secrets/google-credentials.json";
 
+
+    /*
+    DEBUG TEMPORAL PARA RENDER
+    --------------------------------------------------------
+    Esto nos permitirá comprobar en los logs si Render
+    realmente está montando el Secret File.
+    --------------------------------------------------------
+    */
+
+    console.log(
+        "DEBUG RENDER - /etc/secrets existe:",
+        fs.existsSync("/etc/secrets")
+    );
+
+    console.log(
+        "DEBUG RENDER - credencial existe:",
+        fs.existsSync(rutaRender)
+    );
+
+
     if (fs.existsSync(rutaRender)) {
+
         try {
 
             const contenido =
@@ -76,7 +105,9 @@ function cargarCredenciales() {
             );
 
         }
+
     }
+
 
     /*
     --------------------------------------------------------
@@ -103,6 +134,7 @@ function cargarCredenciales() {
         )
 
     ];
+
 
     for (const ruta of posiblesRutas) {
 
@@ -132,12 +164,21 @@ function cargarCredenciales() {
 
     }
 
+
+    /*
+    --------------------------------------------------------
+    NO SE ENCONTRARON CREDENCIALES
+    --------------------------------------------------------
+    */
+
     throw new Error(
         "No se encontraron las credenciales de Google. " +
         "Configura GOOGLE_CREDENTIALS_JSON o agrega " +
         "google-credentials.json como Secret File en Render."
     );
+
 }
+
 
 /*
 ============================================================
@@ -170,6 +211,7 @@ async function obtenerClienteGoogleSheets() {
         auth
 
     });
+
 }
 
 
@@ -187,6 +229,7 @@ function valorTexto(valor) {
     ) {
 
         return null;
+
     }
 
 
@@ -197,6 +240,7 @@ function valorTexto(valor) {
     return texto === ""
         ? null
         : texto;
+
 }
 
 
@@ -215,6 +259,7 @@ function valorEntero(valor) {
     ) {
 
         return null;
+
     }
 
 
@@ -231,10 +276,12 @@ function valorEntero(valor) {
     if (!Number.isFinite(numero)) {
 
         return null;
+
     }
 
 
     return Math.trunc(numero);
+
 }
 
 
@@ -253,6 +300,7 @@ function valorFecha(valor) {
     ) {
 
         return null;
+
     }
 
 
@@ -262,6 +310,7 @@ function valorFecha(valor) {
     ) {
 
         return valor;
+
     }
 
 
@@ -282,6 +331,7 @@ function valorFecha(valor) {
     if (!isNaN(fecha.getTime())) {
 
         return fecha;
+
     }
 
 
@@ -336,11 +386,14 @@ function valorFecha(valor) {
         ) {
 
             return fechaManual;
+
         }
+
     }
 
 
     return null;
+
 }
 
 
@@ -419,6 +472,7 @@ async function leerCotizacionesGoogleSheets() {
         throw new Error(
             `La hoja "${NOMBRE_HOJA}" no contiene datos.`
         );
+
     }
 
 
@@ -478,6 +532,7 @@ async function leerCotizacionesGoogleSheets() {
             if (!encabezado) {
 
                 continue;
+
             }
 
 
@@ -485,12 +540,14 @@ async function leerCotizacionesGoogleSheets() {
                 filaValores[columna] !== undefined
                     ? filaValores[columna]
                     : null;
+
         }
 
 
         filas.push(
             fila
         );
+
     }
 
 
@@ -501,6 +558,7 @@ async function leerCotizacionesGoogleSheets() {
 
 
     return filas;
+
 }
 
 
@@ -625,6 +683,7 @@ function mapearCotizacion(fila) {
             ) || "Pendiente"
 
     };
+
 }
 
 
@@ -645,6 +704,7 @@ function obtenerClienteId(cotizacion) {
     if (celular) {
 
         return celular;
+
     }
 
 
@@ -668,10 +728,12 @@ function obtenerClienteId(cotizacion) {
                 /\s+/g,
                 "-"
             );
+
     }
 
 
     return `cliente-${cotizacion.cotizacion}`;
+
 }
 
 
@@ -725,12 +787,14 @@ async function sincronizarGoogleSheets() {
             omitidas++;
 
             continue;
+
         }
 
 
         cotizacionesValidas.push(
             cotizacion
         );
+
     }
 
 
@@ -773,6 +837,7 @@ async function sincronizarGoogleSheets() {
 
 
                 procesadas++;
+
             }
 
 
@@ -850,7 +915,9 @@ async function sincronizarGoogleSheets() {
                                 cotizacion.estado
 
                         }
+
                     );
+
                 }
 
 
@@ -884,6 +951,7 @@ async function sincronizarGoogleSheets() {
 
                         cliente.primeraCotizacion =
                             fechaActual;
+
                     }
 
 
@@ -901,8 +969,11 @@ async function sincronizarGoogleSheets() {
 
                         cliente.ultimaCotizacion =
                             fechaActual;
+
                     }
+
                 }
+
             }
 
 
@@ -923,6 +994,7 @@ async function sincronizarGoogleSheets() {
                         cliente
 
                 });
+
             }
 
 
@@ -955,6 +1027,7 @@ async function sincronizarGoogleSheets() {
                 ) {
 
                     continue;
+
                 }
 
 
@@ -1005,7 +1078,9 @@ async function sincronizarGoogleSheets() {
                                 cotizacion.fecha
 
                         }
+
                     );
+
                 }
 
 
@@ -1046,20 +1121,19 @@ async function sincronizarGoogleSheets() {
 
 
                 if (
-
                     fechaActual &&
-
                     (
                         !producto.ultimaSolicitud ||
                         fechaActual >
                             producto.ultimaSolicitud
                     )
-
                 ) {
 
                     producto.ultimaSolicitud =
                         fechaActual;
+
                 }
+
             }
 
 
@@ -1080,14 +1154,18 @@ async function sincronizarGoogleSheets() {
                         producto
 
                 });
+
             }
 
         },
 
         {
-    timeout: 30000,
-    maxWait: 30000
-}
+
+            timeout: 30000,
+
+            maxWait: 30000
+
+        }
 
     );
 
@@ -1115,6 +1193,7 @@ async function sincronizarGoogleSheets() {
             },
 
             0
+
         );
 
 
@@ -1190,6 +1269,7 @@ async function sincronizarGoogleSheets() {
 
 
     return resultado;
+
 }
 
 
