@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/*
+  ============================================================
+  PUERTO VIVERO ANALYTICS
+  BASE DE DATOS
+  ============================================================
+*/
+
+model Cotizacion {
+  id                Int       @id @default(autoincrement())
+  cotizacion        String    
+  fecha             DateTime?
+  fechaLocal        DateTime?
+  estado            String?
+  origen            String?
+  nombre            String?
+  apellido          String?
+  celular           String?
+  direccion         String?
+  ciudad            String?
+  productoId        String?
+  producto          String?
+  categoria         String?
+  subcategoria      String?
+  altura            String?
+  cantidad          Int?
+  referencias       String?
+  unidadesTotales   Int?
+  ultimaActualizacion DateTime?
+  responsable       String?
+  observaciones     String?
+  estadoComercial   String?
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@index([fecha])
+  @@index([estado])
+  @@index([ciudad])
+  @@index([productoId])
+  @@index([estadoComercial])
+  @@index([origen])
+  @@map("cotizaciones")
+}
+
+model Cliente {
+  id                 Int       @id @default(autoincrement())
+  clienteId          String    @unique
+  nombre             String?
+  apellido           String?
+  celular             String?
+  direccion          String?
+  ciudad             String?
+  primeraCotizacion  DateTime?
+  ultimaCotizacion   DateTime?
+  numeroCotizaciones Int?
+  estado             String?
+
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@index([celular])
+  @@index([ciudad])
+  @@index([estado])
+  @@map("clientes")
+}
+
+model ProductoSolicitado {
+  id                  Int       @id @default(autoincrement())
+  productoId           String    @unique
+  producto             String?
+  categoria            String?
+  subcategoria        String?
+  altura              String?
+  unidadesSolicitadas Int?
+  numeroCotizaciones  Int?
+  ultimaSolicitud     DateTime?
+
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@index([categoria])
+  @@index([subcategoria])
+  @@map("productos_solicitados")
+}
+
+model EventoAnalytics {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  fecha       DateTime  @default(now())
+  productId   String?
+  productName String?
+  categoria   String?
+  quantity    Int?
+  height      String?
+  quoteId     String?
+  itemsCount  Int?
+  totalUnits  Int?
+  source      String?
+
+  @@index([nombre])
+  @@index([fecha])
+  @@index([productId])
+  @@index([quoteId])
+  @@map("eventos_analytics")
+}
+
+model UsuarioAdmin {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  passwordHash String
+  activo       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("usuarios_admin")
+}

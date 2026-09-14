@@ -1,0 +1,3381 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#07111F"
+    >
+
+    <meta
+        name="description"
+        content="Puerto Vivero Analytics — panel de control comercial y analítico."
+    >
+
+    <title>
+        Puerto Vivero Analytics
+    </title>
+
+
+    <!-- =========================================================
+         GOOGLE FONTS
+    ========================================================== -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =========================================================
+         FONT AWESOME
+    ========================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- =========================================================
+         CHART.JS
+         Preparado para los gráficos reales de GA4
+    ========================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js"
+        defer
+    ></script>
+
+
+    <!-- =========================================================
+         ESTILOS
+    ========================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         APP
+    ========================================================== -->
+
+    <div id="app">
+
+
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
+
+        <aside
+            class="sidebar"
+            id="sidebar"
+        >
+
+            <div class="sidebar-brand">
+
+                <div class="brand-mark">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+
+                <div class="brand-text">
+
+                    <span class="brand-title">
+                        PUERTO VIVERO
+                    </span>
+
+                    <span class="brand-subtitle">
+                        ANALYTICS
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-section">
+
+                <span class="sidebar-label">
+                    PRINCIPAL
+                </span>
+
+
+                <nav class="sidebar-nav">
+
+
+                    <!-- INICIO -->
+
+                    <button
+                        class="nav-item active"
+                        data-section="inicio"
+                    >
+
+                        <i class="fa-solid fa-grid-2"></i>
+
+                        <span>
+                            Inicio
+                        </span>
+
+                    </button>
+
+
+                    <!-- ANALYTICS -->
+
+                    <button
+                        class="nav-item"
+                        data-section="analytics"
+                    >
+
+                        <i class="fa-solid fa-chart-line"></i>
+
+                        <span>
+                            Analytics
+                        </span>
+
+                    </button>
+
+
+                    <!-- COTIZACIONES -->
+
+                    <button
+                        class="nav-item"
+                        data-section="cotizaciones"
+                    >
+
+                        <i class="fa-solid fa-file-invoice"></i>
+
+                        <span>
+                            Cotizaciones
+                        </span>
+
+                    </button>
+
+
+                    <!-- CLIENTES -->
+
+                    <button
+                        class="nav-item"
+                        data-section="clientes"
+                    >
+
+                        <i class="fa-solid fa-users"></i>
+
+                        <span>
+                            Clientes
+                        </span>
+
+                    </button>
+
+
+                    <!-- SEGUIMIENTO -->
+
+                    <button
+                        class="nav-item"
+                        data-section="seguimiento"
+                    >
+
+                        <i class="fa-solid fa-route"></i>
+
+                        <span>
+                            Seguimiento
+                        </span>
+
+                        <span
+                            class="nav-badge"
+                            id="seguimientoBadge"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <!-- PRODUCTOS -->
+
+                    <button
+                        class="nav-item"
+                        data-section="productos"
+                    >
+
+                        <i class="fa-solid fa-seedling"></i>
+
+                        <span>
+                            Productos
+                        </span>
+
+                    </button>
+
+                </nav>
+
+            </div>
+
+
+            <!-- =================================================
+                 SISTEMA
+            ================================================== -->
+
+            <div class="sidebar-section sidebar-section-bottom">
+
+                <span class="sidebar-label">
+                    SISTEMA
+                </span>
+
+
+                <nav class="sidebar-nav">
+
+                    <button
+                        class="nav-item"
+                        data-section="configuracion"
+                    >
+
+                        <i class="fa-solid fa-sliders"></i>
+
+                        <span>
+                            Configuración
+                        </span>
+
+                    </button>
+
+                </nav>
+
+            </div>
+
+
+            <!-- =================================================
+                 FOOTER SIDEBAR
+            ================================================== -->
+
+            <div class="sidebar-footer">
+
+                <div class="connection-status">
+
+                    <span class="status-dot"></span>
+
+                    <span>
+                        Sistema conectado
+                    </span>
+
+                </div>
+
+                <span class="version">
+                    v1.0.0
+                </span>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             OVERLAY MOBILE
+        ====================================================== -->
+
+        <div
+            class="sidebar-overlay"
+            id="sidebarOverlay"
+        ></div>
+
+
+        <!-- =====================================================
+             MAIN
+        ====================================================== -->
+
+        <main class="main">
+
+
+            <!-- =================================================
+                 TOPBAR
+            ================================================== -->
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+
+                    <button
+                        class="mobile-menu"
+                        id="mobileMenu"
+                        aria-label="Abrir menú"
+                    >
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </button>
+
+
+                    <div class="page-heading">
+
+                        <span
+                            class="page-eyebrow"
+                            id="pageEyebrow"
+                        >
+                            PUERTO VIVERO
+                        </span>
+
+                        <h1 id="pageTitle">
+                            Resumen general
+                        </h1>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-right">
+
+                    <button
+                        class="topbar-icon"
+                        aria-label="Notificaciones"
+                        type="button"
+                    >
+
+                        <i class="fa-regular fa-bell"></i>
+
+                        <span class="notification-dot"></span>
+
+                    </button>
+
+
+                    <div class="admin-profile">
+
+                        <div class="admin-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+
+                        <div class="admin-info">
+
+                            <strong>
+                                Administrador
+                            </strong>
+
+                            <span>
+                                Puerto Vivero
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
+
+            <div class="content">
+
+
+                <!-- =================================================
+                     INICIO
+                ================================================== -->
+
+                <section
+                    class="dashboard-section active"
+                    id="section-inicio"
+                >
+
+
+                    <!-- HERO -->
+
+                    <div class="dashboard-hero">
+
+                        <div class="hero-copy">
+
+                            <span class="hero-kicker">
+                                PANEL DE CONTROL
+                            </span>
+
+                            <h2>
+                                Una visión clara de tu negocio.
+                            </h2>
+
+                            <p>
+                                Supervisa cotizaciones, clientes,
+                                productos y actividad comercial
+                                desde un solo lugar.
+                            </p>
+
+                        </div>
+
+
+                        <div class="hero-decoration">
+
+                            <div class="hero-orbit orbit-one"></div>
+
+                            <div class="hero-orbit orbit-two"></div>
+
+                            <div class="hero-leaf">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- METRICS -->
+
+                    <div class="metrics-grid">
+
+
+                        <article class="metric-card">
+
+                            <div class="metric-top">
+
+                                <span class="metric-label">
+                                    COTIZACIONES
+                                </span>
+
+                                <div class="metric-icon blue">
+                                    <i class="fa-solid fa-file-invoice"></i>
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="metric-value"
+                                id="metricCotizaciones"
+                            >
+                                —
+                            </div>
+
+                            <div class="metric-footer">
+
+                                <span>
+                                    Solicitudes registradas
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <article class="metric-card">
+
+                            <div class="metric-top">
+
+                                <span class="metric-label">
+                                    CLIENTES
+                                </span>
+
+                                <div class="metric-icon cyan">
+                                    <i class="fa-solid fa-users"></i>
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="metric-value"
+                                id="metricClientes"
+                            >
+                                —
+                            </div>
+
+                            <div class="metric-footer">
+
+                                <span>
+                                    Clientes identificados
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <article class="metric-card">
+
+                            <div class="metric-top">
+
+                                <span class="metric-label">
+                                    UNIDADES
+                                </span>
+
+                                <div class="metric-icon green">
+                                    <i class="fa-solid fa-seedling"></i>
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="metric-value"
+                                id="metricUnidades"
+                            >
+                                —
+                            </div>
+
+                            <div class="metric-footer">
+
+                                <span>
+                                    Plantas solicitadas
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <article class="metric-card priority-card">
+
+                            <div class="metric-top">
+
+                                <span class="metric-label">
+                                    SEGUIMIENTO
+                                </span>
+
+                                <div class="metric-icon gold">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="metric-value"
+                                id="metricPendientes"
+                            >
+                                —
+                            </div>
+
+                            <div class="metric-footer">
+
+                                <span>
+                                    Requieren atención
+                                </span>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+
+                    <!-- MAIN GRID -->
+
+                    <div class="dashboard-grid">
+
+
+                        <!-- ACTIVIDAD -->
+
+                        <article class="panel panel-large">
+
+                            <div class="panel-header">
+
+                                <div>
+
+                                    <span class="panel-kicker">
+                                        ACTIVIDAD
+                                    </span>
+
+                                    <h3>
+                                        Actividad comercial
+                                    </h3>
+
+                                </div>
+
+
+                                <button
+                                    class="panel-action"
+                                    data-section="analytics"
+                                    type="button"
+                                >
+
+                                    Ver analytics
+
+                                    <i class="fa-solid fa-arrow-right"></i>
+
+                                </button>
+
+                            </div>
+
+
+                            <div
+                                class="activity-placeholder"
+                                id="activityChart"
+                            >
+
+                                <div class="placeholder-icon">
+                                    <i class="fa-solid fa-chart-area"></i>
+                                </div>
+
+                                <span>
+                                    Analytics visuales
+                                </span>
+
+                                <small>
+                                    Los datos de actividad aparecerán aquí.
+                                </small>
+
+                            </div>
+
+                        </article>
+
+
+                        <!-- ESTADOS -->
+
+                        <article class="panel">
+
+                            <div class="panel-header">
+
+                                <div>
+
+                                    <span class="panel-kicker">
+                                        COMERCIAL
+                                    </span>
+
+                                    <h3>
+                                        Estados
+                                    </h3>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="status-list"
+                                id="statusList"
+                            >
+
+                                <div class="status-loading">
+                                    Cargando...
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+
+                    <!-- SEGUIMIENTO PREVIEW -->
+
+                    <article class="panel followup-panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-kicker">
+                                    SEGUIMIENTO
+                                </span>
+
+                                <h3>
+                                    Clientes que requieren atención
+                                </h3>
+
+                            </div>
+
+
+                            <button
+                                class="panel-action"
+                                data-section="seguimiento"
+                                type="button"
+                            >
+
+                                Ver seguimiento
+
+                                <i class="fa-solid fa-arrow-right"></i>
+
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="followup-preview"
+                            id="followupPreview"
+                        >
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+                                    <i class="fa-solid fa-route"></i>
+                                </div>
+
+                                <strong>
+                                    Cargando seguimiento
+                                </strong>
+
+                                <span>
+                                    Consultando actividad comercial...
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                </section>
+
+
+                <!-- =================================================
+     ANALYTICS
+================================================== -->
+
+<section
+    class="dashboard-section"
+    id="section-analytics"
+>
+
+    <!-- =================================================
+         ANALYTICS HERO
+    ================================================== -->
+
+    <div class="analytics-hero">
+
+        <div class="analytics-hero-copy">
+
+            <div class="analytics-live-badge">
+
+                <span class="analytics-live-dot"></span>
+
+                <span>
+                    GOOGLE ANALYTICS 4
+                </span>
+
+                <strong id="analyticsConnectionStatus">
+                    ESPERANDO DATOS
+                </strong>
+
+            </div>
+
+            <span class="section-eyebrow">
+                RENDIMIENTO DIGITAL
+            </span>
+
+            <h2>
+                Tu negocio,
+                <span>en números.</span>
+            </h2>
+
+            <p>
+                Analiza el comportamiento de tus visitantes,
+                descubre qué contenido genera interés y mide
+                las acciones que acercan cada cliente a una cotización.
+            </p>
+
+        </div>
+
+
+        <div class="analytics-hero-actions">
+
+            <div class="analytics-date-control">
+
+                <i class="fa-regular fa-calendar"></i>
+
+                <select
+                    id="analyticsRange"
+                    aria-label="Periodo de Analytics"
+                >
+
+                    <option value="7">
+                        Últimos 7 días
+                    </option>
+
+                    <option
+                        value="30"
+                        selected
+                    >
+                        Últimos 30 días
+                    </option>
+
+                    <option value="90">
+                        Últimos 90 días
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="module-refresh analytics-refresh-btn"
+                id="analyticsRefresh"
+            >
+
+                <i class="fa-solid fa-rotate-right"></i>
+
+                Actualizar
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CONEXIÓN GA4
+    ================================================== -->
+
+    <div
+        class="analytics-connection analytics-connection-premium"
+        id="analyticsConnection"
+    >
+
+        <div class="analytics-connection-icon">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+        </div>
+
+
+        <div class="analytics-connection-info">
+
+            <strong>
+                Google Analytics 4
+            </strong>
+
+            <span id="analyticsConnectionText">
+                Preparando conexión con los datos analíticos...
+            </span>
+
+        </div>
+
+
+        <div class="analytics-connection-meta">
+
+            <span class="analytics-property-label">
+                PROPERTY
+            </span>
+
+            <strong>
+                441890877
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         KPI PRINCIPALES
+    ================================================== -->
+
+    <div class="analytics-kpi-grid">
+
+
+        <!-- USUARIOS -->
+
+        <article class="analytics-kpi-card analytics-kpi-users">
+
+            <div class="analytics-kpi-header">
+
+                <div class="analytics-kpi-icon blue">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+                <span class="analytics-kpi-label">
+                    USUARIOS ACTIVOS
+                </span>
+
+            </div>
+
+
+            <div
+                class="analytics-kpi-value"
+                id="analyticsActiveUsers"
+            >
+                —
+            </div>
+
+
+            <div class="analytics-kpi-footer">
+
+                <span>
+                    Visitantes únicos
+                </span>
+
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
+            </div>
+
+        </article>
+
+
+        <!-- SESIONES -->
+
+        <article class="analytics-kpi-card analytics-kpi-sessions">
+
+            <div class="analytics-kpi-header">
+
+                <div class="analytics-kpi-icon cyan">
+
+                    <i class="fa-solid fa-window-maximize"></i>
+
+                </div>
+
+                <span class="analytics-kpi-label">
+                    SESIONES
+                </span>
+
+            </div>
+
+
+            <div
+                class="analytics-kpi-value"
+                id="analyticsSessions"
+            >
+                —
+            </div>
+
+
+            <div class="analytics-kpi-footer">
+
+                <span>
+                    Visitas al sitio
+                </span>
+
+                <i class="fa-solid fa-chart-simple"></i>
+
+            </div>
+
+        </article>
+
+
+        <!-- PÁGINAS -->
+
+        <article class="analytics-kpi-card analytics-kpi-pages">
+
+            <div class="analytics-kpi-header">
+
+                <div class="analytics-kpi-icon green">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                </div>
+
+                <span class="analytics-kpi-label">
+                    PÁGINAS VISTAS
+                </span>
+
+            </div>
+
+
+            <div
+                class="analytics-kpi-value"
+                id="analyticsPageViews"
+            >
+                —
+            </div>
+
+
+            <div class="analytics-kpi-footer">
+
+                <span>
+                    Contenido consultado
+                </span>
+
+                <i class="fa-solid fa-eye"></i>
+
+            </div>
+
+        </article>
+
+
+        <!-- EVENTOS -->
+
+        <article class="analytics-kpi-card analytics-kpi-events">
+
+            <div class="analytics-kpi-header">
+
+                <div class="analytics-kpi-icon gold">
+
+                    <i class="fa-solid fa-bolt"></i>
+
+                </div>
+
+                <span class="analytics-kpi-label">
+                    EVENTOS
+                </span>
+
+            </div>
+
+
+            <div
+                class="analytics-kpi-value"
+                id="analyticsEvents"
+            >
+                —
+            </div>
+
+
+            <div class="analytics-kpi-footer">
+
+                <span>
+                    Interacciones registradas
+                </span>
+
+                <i class="fa-solid fa-wave-square"></i>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =================================================
+         TRÁFICO PRINCIPAL
+    ================================================== -->
+
+    <div class="analytics-main-visual-grid">
+
+
+        <!-- GRÁFICO -->
+
+        <article class="panel analytics-traffic-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        TRÁFICO
+                    </span>
+
+                    <h3>
+                        Actividad del sitio
+                    </h3>
+
+                    <p>
+                        Sesiones registradas durante el periodo seleccionado.
+                    </p>
+
+                </div>
+
+
+                <div class="analytics-period">
+
+                    <span class="analytics-period-dot"></span>
+
+                    <span id="analyticsPeriodLabel">
+                        Últimos 30 días
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-chart-wrapper">
+
+                <div
+                    class="analytics-chart-loading"
+                    id="analyticsChartLoading"
+                >
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    <span>
+                        Cargando actividad...
+                    </span>
+
+                </div>
+
+
+                <canvas
+                    id="analyticsTrafficChart"
+                    aria-label="Gráfico de actividad del sitio"
+                ></canvas>
+
+            </div>
+
+        </article>
+
+
+        <!-- RESUMEN DE ACTIVIDAD -->
+
+        <article class="panel analytics-overview-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        ACTIVIDAD
+                    </span>
+
+                    <h3>
+                        Resumen
+                    </h3>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-overview-content">
+
+
+                <div class="analytics-overview-orbit">
+
+                    <div class="analytics-orbit-ring"></div>
+
+                    <div class="analytics-orbit-ring ring-two"></div>
+
+                    <div class="analytics-orbit-core">
+
+                        <i class="fa-solid fa-leaf"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-overview-stat">
+
+                    <span>
+                        INTERACCIONES
+                    </span>
+
+                    <strong id="analyticsOverviewEvents">
+                        —
+                    </strong>
+
+                    <small>
+                        Eventos registrados
+                    </small>
+
+                </div>
+
+
+                <div class="analytics-overview-divider"></div>
+
+
+                <div class="analytics-mini-stat">
+
+                    <div class="analytics-mini-icon">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            USUARIOS
+                        </span>
+
+                        <strong id="analyticsOverviewUsers">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analytics-mini-stat">
+
+                    <div class="analytics-mini-icon">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            PÁGINAS
+                        </span>
+
+                        <strong id="analyticsOverviewViews">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =================================================
+         DISPOSITIVOS + FUENTES
+    ================================================== -->
+
+    <div class="analytics-distribution-grid">
+
+
+        <!-- DISPOSITIVOS -->
+
+        <article class="panel analytics-distribution-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        DISPOSITIVOS
+                    </span>
+
+                    <h3>
+                        Cómo acceden
+                    </h3>
+
+                </div>
+
+                <i class="fa-solid fa-mobile-screen-button analytics-header-icon"></i>
+
+            </div>
+
+
+            <div
+                class="analytics-device-visual"
+                id="analyticsDevices"
+            >
+
+                <div class="analytics-loading">
+
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+
+                    <span>
+                        Cargando dispositivos...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- FUENTES -->
+
+        <article class="panel analytics-distribution-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        ADQUISICIÓN
+                    </span>
+
+                    <h3>
+                        De dónde llegan
+                    </h3>
+
+                </div>
+
+                <i class="fa-solid fa-arrow-right-to-bracket analytics-header-icon"></i>
+
+            </div>
+
+
+            <div
+                class="analytics-source-visual"
+                id="analyticsSources"
+            >
+
+                <div class="analytics-loading">
+
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+
+                    <span>
+                        Cargando fuentes...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =================================================
+         GEOGRAFÍA
+    ================================================== -->
+
+    <div class="analytics-geography-section">
+
+        <div class="analytics-section-title">
+
+            <div>
+
+                <span class="section-eyebrow">
+                    AUDIENCIA
+                </span>
+
+                <h3>
+                    ¿Desde dónde te visitan?
+                </h3>
+
+            </div>
+
+            <span>
+                Usuarios activos
+            </span>
+
+        </div>
+
+
+        <div class="analytics-geography-grid">
+
+
+            <!-- PAÍSES -->
+
+            <article class="panel analytics-location-panel">
+
+                <div class="analytics-panel-header">
+
+                    <div>
+
+                        <span class="panel-kicker">
+                            PAÍSES
+                        </span>
+
+                        <h3>
+                            Alcance geográfico
+                        </h3>
+
+                    </div>
+
+                    <div class="analytics-location-icon">
+
+                        <i class="fa-solid fa-globe"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="analytics-location-list"
+                    id="analyticsCountries"
+                >
+
+                    <div class="analytics-loading">
+
+                        <i class="fa-solid fa-globe"></i>
+
+                        <span>
+                            Cargando países...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- CIUDADES -->
+
+            <article class="panel analytics-location-panel">
+
+                <div class="analytics-panel-header">
+
+                    <div>
+
+                        <span class="panel-kicker">
+                            CIUDADES
+                        </span>
+
+                        <h3>
+                            Principales ubicaciones
+                        </h3>
+
+                    </div>
+
+                    <div class="analytics-location-icon">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="analytics-location-list"
+                    id="analyticsCities"
+                >
+
+                    <div class="analytics-loading">
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <span>
+                            Cargando ciudades...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         CONTENIDO + PÁGINAS
+    ================================================== -->
+
+    <div class="analytics-content-grid">
+
+
+        <!-- PÁGINAS -->
+
+        <article class="panel analytics-pages-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        CONTENIDO
+                    </span>
+
+                    <h3>
+                        Páginas más visitadas
+                    </h3>
+
+                    <p>
+                        El contenido que más atrae la atención.
+                    </p>
+
+                </div>
+
+                <i class="fa-solid fa-ranking-star analytics-header-icon"></i>
+
+            </div>
+
+
+            <div
+                class="analytics-pages-visual"
+                id="analyticsPages"
+            >
+
+                <div class="analytics-loading">
+
+                    <i class="fa-solid fa-file-lines"></i>
+
+                    <span>
+                        Cargando páginas...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- EMBUDO COMERCIAL -->
+
+        <article class="panel analytics-funnel-panel">
+
+            <div class="analytics-panel-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        CONVERSIÓN
+                    </span>
+
+                    <h3>
+                        Recorrido comercial
+                    </h3>
+
+                    <p>
+                        Del interés a la acción.
+                    </p>
+
+                </div>
+
+                <i class="fa-solid fa-filter analytics-header-icon"></i>
+
+            </div>
+
+
+            <div class="analytics-funnel">
+
+
+                <div class="funnel-step">
+
+                    <div class="funnel-step-number">
+                        01
+                    </div>
+
+                    <div class="funnel-step-content">
+
+                        <span>
+                            PRODUCTOS VISTOS
+                        </span>
+
+                        <strong id="funnelViews">
+                            —
+                        </strong>
+
+                    </div>
+
+                    <div class="funnel-step-bar">
+
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="funnel-step">
+
+                    <div class="funnel-step-number">
+                        02
+                    </div>
+
+                    <div class="funnel-step-content">
+
+                        <span>
+                            PRODUCTOS SELECCIONADOS
+                        </span>
+
+                        <strong id="funnelSelects">
+                            —
+                        </strong>
+
+                    </div>
+
+                    <div class="funnel-step-bar">
+
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="funnel-step">
+
+                    <div class="funnel-step-number">
+                        03
+                    </div>
+
+                    <div class="funnel-step-content">
+
+                        <span>
+                            COTIZACIONES INICIADAS
+                        </span>
+
+                        <strong id="funnelBeginQuote">
+                            —
+                        </strong>
+
+                    </div>
+
+                    <div class="funnel-step-bar">
+
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="funnel-step">
+
+                    <div class="funnel-step-number">
+                        04
+                    </div>
+
+                    <div class="funnel-step-content">
+
+                        <span>
+                            COTIZACIONES ENVIADAS
+                        </span>
+
+                        <strong id="funnelSubmitted">
+                            —
+                        </strong>
+
+                    </div>
+
+                    <div class="funnel-step-bar">
+
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="funnel-step funnel-step-final">
+
+                    <div class="funnel-step-number">
+                        05
+                    </div>
+
+                    <div class="funnel-step-content">
+
+                        <span>
+                            CONTACTO WHATSAPP
+                        </span>
+
+                        <strong id="funnelWhatsapp">
+                            —
+                        </strong>
+
+                    </div>
+
+                    <div class="funnel-step-bar">
+
+                        <span></span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =================================================
+         EVENTOS REGISTRADOS
+    ================================================== -->
+
+    <article class="panel analytics-events-panel">
+
+        <div class="analytics-panel-header">
+
+            <div>
+
+                <span class="panel-kicker">
+                    INTERACCIONES
+                </span>
+
+                <h3>
+                    Actividad de usuarios
+                </h3>
+
+                <p>
+                    Eventos registrados por Google Analytics 4.
+                </p>
+
+            </div>
+
+
+            <div class="analytics-events-total">
+
+                <span>
+                    TOTAL
+                </span>
+
+                <strong id="analyticsEventsTotal">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="analytics-events-grid"
+            id="analyticsEventsList"
+        >
+
+            <div class="analytics-loading">
+
+                <i class="fa-solid fa-bolt"></i>
+
+                <span>
+                    Cargando eventos...
+                </span>
+
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <!-- =================================================
+         EVENTOS COMERCIALES
+    ================================================== -->
+
+    <article class="panel analytics-business-events">
+
+        <div class="analytics-panel-header">
+
+            <div>
+
+                <span class="panel-kicker">
+                    NEGOCIO
+                </span>
+
+                <h3>
+                    Eventos comerciales
+                </h3>
+
+                <p>
+                    Las acciones que muestran intención de compra.
+                </p>
+
+            </div>
+
+
+            <div class="analytics-business-status">
+
+                <span></span>
+
+                GA4
+                ACTIVO
+
+            </div>
+
+        </div>
+
+
+        <div class="business-events-grid">
+
+
+            <!-- PRODUCTOS VISTOS -->
+
+            <div class="business-event-card">
+
+                <div class="business-event-icon blue">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </div>
+
+                <div class="business-event-content">
+
+                    <span>
+                        PRODUCTOS VISTOS
+                    </span>
+
+                    <strong id="eventViewProduct">
+                        —
+                    </strong>
+
+                    <small>
+                        view_product
+                    </small>
+
+                </div>
+
+                <div class="business-event-arrow">
+
+                    <i class="fa-solid fa-arrow-up-right"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCTOS SELECCIONADOS -->
+
+            <div class="business-event-card">
+
+                <div class="business-event-icon cyan">
+
+                    <i class="fa-solid fa-hand-pointer"></i>
+
+                </div>
+
+                <div class="business-event-content">
+
+                    <span>
+                        PRODUCTOS SELECCIONADOS
+                    </span>
+
+                    <strong id="eventSelectProduct">
+                        —
+                    </strong>
+
+                    <small>
+                        select_product
+                    </small>
+
+                </div>
+
+                <div class="business-event-arrow">
+
+                    <i class="fa-solid fa-arrow-up-right"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- COTIZACIONES INICIADAS -->
+
+            <div class="business-event-card">
+
+                <div class="business-event-icon gold">
+
+                    <i class="fa-solid fa-file-circle-plus"></i>
+
+                </div>
+
+                <div class="business-event-content">
+
+                    <span>
+                        COTIZACIONES INICIADAS
+                    </span>
+
+                    <strong id="eventBeginQuote">
+                        —
+                    </strong>
+
+                    <small>
+                        begin_quote
+                    </small>
+
+                </div>
+
+                <div class="business-event-arrow">
+
+                    <i class="fa-solid fa-arrow-up-right"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- COTIZACIONES ENVIADAS -->
+
+            <div class="business-event-card">
+
+                <div class="business-event-icon green">
+
+                    <i class="fa-solid fa-file-circle-check"></i>
+
+                </div>
+
+                <div class="business-event-content">
+
+                    <span>
+                        COTIZACIONES ENVIADAS
+                    </span>
+
+                    <strong id="eventQuoteSubmitted">
+                        —
+                    </strong>
+
+                    <small>
+                        quote_submitted
+                    </small>
+
+                </div>
+
+                <div class="business-event-arrow">
+
+                    <i class="fa-solid fa-arrow-up-right"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- WHATSAPP -->
+
+            <div class="business-event-card">
+
+                <div class="business-event-icon green">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                </div>
+
+                <div class="business-event-content">
+
+                    <span>
+                        CLICS EN WHATSAPP
+                    </span>
+
+                    <strong id="eventWhatsappClick">
+                        —
+                    </strong>
+
+                    <small>
+                        whatsapp_click
+                    </small>
+
+                </div>
+
+                <div class="business-event-arrow">
+
+                    <i class="fa-solid fa-arrow-up-right"></i>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </article>
+
+
+    <!-- =================================================
+         EMPTY / ERROR STATE
+    ================================================== -->
+
+    <div
+        class="analytics-empty"
+        id="analyticsEmpty"
+        hidden
+    >
+
+        <div class="empty-icon">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+        </div>
+
+        <strong>
+            No hay datos analíticos disponibles
+        </strong>
+
+        <span>
+            Comprueba la conexión con Google Analytics 4
+            e intenta actualizar nuevamente.
+        </span>
+
+    </div>
+
+
+</section>
+
+
+                <!-- =================================================
+                     COTIZACIONES
+                ================================================== -->
+
+                <section
+                    class="dashboard-section"
+                    id="section-cotizaciones"
+                >
+
+                    <div class="section-intro">
+
+                        <span class="hero-kicker">
+                            COMERCIAL
+                        </span>
+
+                        <h2>
+                            Cotizaciones
+                        </h2>
+
+                        <p>
+                            Consulta y administra todas las
+                            solicitudes recibidas.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="module-placeholder"
+                        id="cotizacionesModule"
+                    >
+                        Preparando módulo de cotizaciones...
+                    </div>
+
+                </section>
+
+
+              <!-- =================================================
+     CLIENTES
+================================================== -->
+
+<section
+    class="dashboard-section"
+    id="section-clientes"
+>
+
+
+    <!-- =================================================
+         INTRODUCCIÓN
+    ================================================== -->
+
+    <div class="section-intro">
+
+        <span class="hero-kicker">
+            CLIENTES
+        </span>
+
+        <h2>
+            Clientes
+        </h2>
+
+        <p>
+            Gestiona la información, actividad e historial
+            comercial de cada cliente.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         MÉTRICAS PRINCIPALES
+    ================================================== -->
+
+    <div class="metrics-grid clientes-metrics">
+
+
+        <!-- TOTAL CLIENTES -->
+
+        <article class="metric-card">
+
+            <div class="metric-top">
+
+                <span class="metric-label">
+                    TOTAL CLIENTES
+                </span>
+
+                <div class="metric-icon cyan">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric-value"
+                id="clientesTotal"
+            >
+                —
+            </div>
+
+
+            <div class="metric-footer">
+
+                <span>
+                    Clientes identificados
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <!-- CLIENTES ACTIVOS -->
+
+        <article class="metric-card">
+
+            <div class="metric-top">
+
+                <span class="metric-label">
+                    ACTIVOS
+                </span>
+
+                <div class="metric-icon green">
+
+                    <i class="fa-solid fa-user-check"></i>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric-value"
+                id="clientesActivos"
+            >
+                —
+            </div>
+
+
+            <div class="metric-footer">
+
+                <span>
+                    Relación comercial activa
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <!-- COTIZACIONES -->
+
+        <article class="metric-card">
+
+            <div class="metric-top">
+
+                <span class="metric-label">
+                    COTIZACIONES
+                </span>
+
+                <div class="metric-icon blue">
+
+                    <i class="fa-solid fa-file-invoice"></i>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric-value"
+                id="clientesCotizaciones"
+            >
+                —
+            </div>
+
+
+            <div class="metric-footer">
+
+                <span>
+                    Solicitudes asociadas
+                </span>
+
+            </div>
+
+        </article>
+
+
+        <!-- CIUDADES -->
+
+        <article class="metric-card">
+
+            <div class="metric-top">
+
+                <span class="metric-label">
+                    CIUDADES
+                </span>
+
+                <div class="metric-icon gold">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="metric-value"
+                id="clientesCiudades"
+            >
+                —
+            </div>
+
+
+            <div class="metric-footer">
+
+                <span>
+                    Zonas registradas
+                </span>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+
+    <!-- =================================================
+         INTELIGENCIA COMERCIAL
+    ================================================== -->
+
+    <div class="clientes-intelligence-grid">
+
+
+        <!-- =================================================
+             TERRITORIO COMERCIAL
+        ================================================== -->
+
+        <article class="clientes-intelligence-panel">
+
+
+            <div class="clientes-intelligence-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        DISTRIBUCIÓN
+                    </span>
+
+                    <h3>
+                        Territorio comercial
+                    </h3>
+
+                    <p>
+                        Concentración de clientes por ciudad.
+                    </p>
+
+                </div>
+
+
+                <div class="clientes-intelligence-icon cyan">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="clientes-territorio-list"
+                id="clientesTerritorio"
+            >
+
+                <div class="clientes-intelligence-loading">
+
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+
+                    <span>
+                        Analizando territorio...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </article>
+
+
+        <!-- =================================================
+             ESTADOS COMERCIALES
+        ================================================== -->
+
+        <article class="clientes-intelligence-panel">
+
+
+            <div class="clientes-intelligence-header">
+
+                <div>
+
+                    <span class="panel-kicker">
+                        EMBUDO COMERCIAL
+                    </span>
+
+                    <h3>
+                        Estado de clientes
+                    </h3>
+
+                    <p>
+                        Distribución actual de la relación comercial.
+                    </p>
+
+                </div>
+
+
+                <div class="clientes-intelligence-icon green">
+
+                    <i class="fa-solid fa-chart-simple"></i>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="clientes-estados-list"
+                id="clientesEstados"
+            >
+
+                <div class="clientes-intelligence-loading">
+
+                    <i class="fa-solid fa-circle-notch fa-spin"></i>
+
+                    <span>
+                        Analizando estados...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </article>
+
+
+    </div>
+
+
+    <!-- =================================================
+         DIRECTORIO DE CLIENTES
+    ================================================== -->
+
+    <article class="panel clientes-panel">
+
+
+        <!-- HEADER -->
+
+        <div class="panel-header">
+
+
+            <div>
+
+                <span class="panel-kicker">
+                    BASE COMERCIAL
+                </span>
+
+                <h3>
+                    Directorio de clientes
+                </h3>
+
+            </div>
+
+
+            <div class="clientes-header-actions">
+
+                <button
+                    class="panel-action"
+                    type="button"
+                    id="clientesRefresh"
+                >
+
+                    Actualizar
+
+                    <i class="fa-solid fa-rotate-right"></i>
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             FILTROS
+        ================================================== -->
+
+        <div class="clientes-toolbar">
+
+
+            <!-- BUSCADOR -->
+
+            <div class="clientes-search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    id="clientesSearch"
+                    placeholder="Buscar por nombre, celular o ciudad..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- FILTROS -->
+
+            <div class="clientes-filters">
+
+
+                <!-- ESTADO -->
+
+                <select
+                    id="clientesEstadoFilter"
+                    aria-label="Filtrar clientes por estado"
+                >
+
+                    <option value="">
+                        Todos los estados
+                    </option>
+
+                    <option value="Pendiente">
+                        Pendiente
+                    </option>
+
+                    <option value="Contactado">
+                        Contactado
+                    </option>
+
+                    <option value="Interesado">
+                        Interesado
+                    </option>
+
+                    <option value="Vendido">
+                        Vendido
+                    </option>
+
+                    <option value="Perdido">
+                        Perdido
+                    </option>
+
+                </select>
+
+
+                <!-- CIUDAD -->
+
+                <select
+                    id="clientesCiudadFilter"
+                    aria-label="Filtrar clientes por ciudad"
+                >
+
+                    <option value="">
+                        Todas las ciudades
+                    </option>
+
+                </select>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             DIRECTORIO / TARJETAS
+        ================================================== -->
+
+        <div
+            class="clientes-table-wrapper"
+            id="clientesTable"
+        >
+
+
+            <div class="table-loading">
+
+
+                <div class="placeholder-icon">
+
+                    <i class="fa-solid fa-users"></i>
+
+                </div>
+
+
+                <strong>
+                    Preparando directorio
+                </strong>
+
+
+                <span>
+                    Cargando información de clientes...
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </article>
+
+
+    <!-- =================================================
+         ESTADO VACÍO
+    ================================================== -->
+
+    <div
+        class="clientes-empty"
+        id="clientesEmpty"
+        hidden
+    >
+
+
+        <div class="empty-icon">
+
+            <i class="fa-solid fa-user-slash"></i>
+
+        </div>
+
+
+        <strong>
+            No encontramos clientes
+        </strong>
+
+
+        <span>
+            Prueba con otro nombre, celular,
+            ciudad o estado.
+        </span>
+
+
+    </div>
+
+
+</section>
+
+
+                <!-- =================================================
+                     SEGUIMIENTO
+                ================================================== -->
+
+                <section
+                    class="dashboard-section"
+                    id="section-seguimiento"
+                >
+
+
+                    <div class="section-heading">
+
+                        <div>
+
+                            <span class="section-eyebrow">
+                                GESTIÓN COMERCIAL
+                            </span>
+
+                            <h2>
+                                Seguimiento
+                            </h2>
+
+                            <p>
+                                Controla las cotizaciones que requieren
+                                atención y mantén cada oportunidad
+                                en movimiento.
+                            </p>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="module-refresh"
+                            id="seguimientoRefresh"
+                        >
+
+                            <i class="fa-solid fa-rotate-right"></i>
+
+                            Actualizar
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- MÉTRICAS -->
+
+                    <div class="metrics-grid seguimiento-metrics">
+
+
+                        <article class="metric-card">
+
+                            <div class="metric-card-top">
+
+                                <span class="metric-label">
+                                    PENDIENTES
+                                </span>
+
+                                <div class="metric-icon blue">
+                                    <i class="fa-regular fa-clock"></i>
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="metric-value"
+                                id="followupPendientes"
+                            >
+                                0
+                            </div>
+
+                            <div class="metric-meta">
+
+                                <span>
+                                    Cotizaciones por gestionar
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <article class="metric-card">
+
+                            <div class="metric-card-top">
+
+                                <span class="metric-label">
+                                    CONTACTADOS
+                                </span>
+
+                                <div class="metric-icon cyan">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="metric-value"
+                                id="followupContactados"
+                            >
+                                0
+                            </div>
+
+                            <div class="metric-meta">
+
+                                <span>
+                                    Clientes contactados
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <article class="metric-card">
+
+                            <div class="metric-card-top">
+
+                                <span class="metric-label">
+                                    INTERESADOS
+                                </span>
+
+                                <div class="metric-icon gold">
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="metric-value"
+                                id="followupInteresados"
+                            >
+                                0
+                            </div>
+
+                            <div class="metric-meta">
+
+                                <span>
+                                    Oportunidades activas
+                                </span>
+
+                            </div>
+
+                        </article>
+
+
+                        <article class="metric-card">
+
+                            <div class="metric-card-top">
+
+                                <span class="metric-label">
+                                    PRIORIDAD ALTA
+                                </span>
+
+                                <div class="metric-icon red">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="metric-value"
+                                id="followupAlta"
+                            >
+                                0
+                            </div>
+
+                            <div class="metric-meta">
+
+                                <span>
+                                    Requieren atención
+                                </span>
+
+                            </div>
+
+                        </article>
+
+                    </div>
+
+
+                    <!-- PANEL -->
+
+                    <div class="module-panel seguimiento-panel">
+
+
+                        <div class="module-panel-header">
+
+                            <div>
+
+                                <span class="module-panel-eyebrow">
+                                    OPORTUNIDADES
+                                </span>
+
+                                <h3>
+                                    Seguimiento comercial
+                                </h3>
+
+                            </div>
+
+
+                            <div class="seguimiento-legend">
+
+                                <span>
+                                    <i class="legend-dot high"></i>
+                                    Alta
+                                </span>
+
+                                <span>
+                                    <i class="legend-dot medium"></i>
+                                    Media
+                                </span>
+
+                                <span>
+                                    <i class="legend-dot normal"></i>
+                                    Normal
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- TABLA -->
+
+                        <div class="table-wrapper seguimiento-table-wrapper">
+
+                            <table class="data-table seguimiento-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            CLIENTE
+                                        </th>
+
+                                        <th>
+                                            CIUDAD
+                                        </th>
+
+                                        <th>
+                                            COTIZACIÓN
+                                        </th>
+
+                                        <th>
+                                            PRODUCTOS
+                                        </th>
+
+                                        <th>
+                                            UNIDADES
+                                        </th>
+
+                                        <th>
+                                            FECHA
+                                        </th>
+
+                                        <th>
+                                            ESTADO
+                                        </th>
+
+                                        <th>
+                                            PRIORIDAD
+                                        </th>
+
+                                        <th>
+                                            ACCIÓN
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="followupTable">
+
+                                    <tr>
+
+                                        <td
+                                            colspan="9"
+                                            class="table-loading"
+                                        >
+
+                                            <i class="fa-solid fa-circle-notch fa-spin"></i>
+
+                                            Cargando seguimiento...
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                        <!-- VACÍO -->
+
+                        <div
+                            class="module-empty"
+                            id="followupEmpty"
+                            style="display:none;"
+                        >
+
+                            <div class="module-empty-icon">
+
+                                <i class="fa-solid fa-check"></i>
+
+                            </div>
+
+                            <h3>
+                                No hay seguimientos pendientes
+                            </h3>
+
+                            <p>
+                                Todas las oportunidades están al día.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+               
+<!-- =================================================
+     PRODUCTOS
+================================================== -->
+
+<section
+    class="dashboard-section"
+    id="section-productos"
+>
+
+    <!-- INTRO -->
+    <div class="section-intro">
+
+        <span class="hero-kicker">
+            CATÁLOGO
+        </span>
+
+        <h2>
+            Productos
+        </h2>
+
+        <p>
+            Rendimiento, demanda y comportamiento comercial
+            de los productos cotizados.
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         MÉTRICAS PRINCIPALES
+    ================================================== -->
+
+    <div class="productos-metrics-grid">
+
+        <article class="producto-metric-card">
+
+            <div class="producto-metric-icon">
+                <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+
+            <div class="producto-metric-content">
+
+                <span class="producto-metric-label">
+                    PRODUCTOS ANALIZADOS
+                </span>
+
+                <strong
+                    id="productosTotal"
+                    class="producto-metric-value"
+                >
+                    0
+                </strong>
+
+                <small>
+                    Productos presentes en cotizaciones
+                </small>
+
+            </div>
+
+        </article>
+
+
+        <article class="producto-metric-card">
+
+            <div class="producto-metric-icon">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+
+            <div class="producto-metric-content">
+
+                <span class="producto-metric-label">
+                    LÍNEAS DE PRODUCTO
+                </span>
+
+                <strong
+                    id="productosLineas"
+                    class="producto-metric-value"
+                >
+                    0
+                </strong>
+
+                <small>
+                    Líneas solicitadas en cotizaciones
+                </small>
+
+            </div>
+
+        </article>
+
+
+        <article class="producto-metric-card">
+
+            <div class="producto-metric-icon">
+                <i class="fa-solid fa-chart-simple"></i>
+            </div>
+
+            <div class="producto-metric-content">
+
+                <span class="producto-metric-label">
+                    UNIDADES SOLICITADAS
+                </span>
+
+                <strong
+                    id="productosUnidades"
+                    class="producto-metric-value"
+                >
+                    0
+                </strong>
+
+                <small>
+                    Unidades acumuladas
+                </small>
+
+            </div>
+
+        </article>
+
+
+        <article class="producto-metric-card producto-metric-featured">
+
+            <div class="producto-metric-icon">
+                <i class="fa-solid fa-crown"></i>
+            </div>
+
+            <div class="producto-metric-content">
+
+                <span class="producto-metric-label">
+                    PRODUCTO LÍDER
+                </span>
+
+                <strong
+                    id="productoLider"
+                    class="producto-metric-value producto-lider-value"
+                >
+                    —
+                </strong>
+
+                <small
+                    id="productoLiderDetalle"
+                >
+                    Mayor demanda registrada
+                </small>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =================================================
+         INTELIGENCIA DE PRODUCTOS
+    ================================================== -->
+
+    <div class="productos-intelligence-grid">
+
+
+        <!-- RANKING DE DEMANDA -->
+
+        <article class="productos-panel productos-demand-panel">
+
+            <div class="productos-panel-header">
+
+                <div>
+
+                    <span class="productos-panel-kicker">
+                        DEMANDA
+                    </span>
+
+                    <h3>
+                        Productos más solicitados
+                    </h3>
+
+                    <p>
+                        Ranking basado en las unidades incluidas
+                        en las cotizaciones.
+                    </p>
+
+                </div>
+
+                <div class="productos-panel-badge">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    Demanda
+                </div>
+
+            </div>
+
+
+            <div
+                id="productosRanking"
+                class="productos-ranking"
+            >
+                <!-- JS -->
+            </div>
+
+        </article>
+
+
+        <!-- CATEGORÍAS -->
+
+        <article class="productos-panel productos-category-panel">
+
+            <div class="productos-panel-header">
+
+                <div>
+
+                    <span class="productos-panel-kicker">
+                        CATEGORÍAS
+                    </span>
+
+                    <h3>
+                        Demanda por categoría
+                    </h3>
+
+                    <p>
+                        Distribución de unidades solicitadas
+                        por categoría.
+                    </p>
+
+                </div>
+
+                <div class="productos-panel-badge">
+                    <i class="fa-solid fa-layer-group"></i>
+                    Categorías
+                </div>
+
+            </div>
+
+
+            <div
+                id="productosCategorias"
+                class="productos-category-list"
+            >
+                <!-- JS -->
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <!-- =================================================
+         RENDIMIENTO COMERCIAL
+    ================================================== -->
+
+    <article class="productos-panel productos-commercial-panel">
+
+        <div class="productos-panel-header">
+
+            <div>
+
+                <span class="productos-panel-kicker">
+                    INTELIGENCIA COMERCIAL
+                </span>
+
+                <h3>
+                    Rendimiento de productos
+                </h3>
+
+                <p>
+                    Relación entre productos, cotizaciones
+                    y comportamiento comercial.
+                </p>
+
+            </div>
+
+            <div class="productos-panel-badge">
+                <i class="fa-solid fa-chart-line"></i>
+                Rendimiento
+            </div>
+
+        </div>
+
+
+        <div
+            id="productosRendimiento"
+            class="productos-commercial-grid"
+        >
+            <!-- JS -->
+        </div>
+
+    </article>
+
+
+    <!-- =================================================
+         DIRECTORIO DE PRODUCTOS
+    ================================================== -->
+
+    <article class="productos-panel productos-directory-panel">
+
+        <div class="productos-panel-header">
+
+            <div>
+
+                <span class="productos-panel-kicker">
+                    DIRECTORIO
+                </span>
+
+                <h3>
+                    Productos cotizados
+                </h3>
+
+                <p>
+                    Consulta y filtra los productos que aparecen
+                    en las cotizaciones registradas.
+                </p>
+
+            </div>
+
+            <button
+                type="button"
+                class="productos-refresh-btn"
+                id="productosRefresh"
+            >
+                <i class="fa-solid fa-rotate"></i>
+                Actualizar
+            </button>
+
+        </div>
+
+
+        <!-- FILTROS -->
+
+        <div class="productos-filters">
+
+            <div class="productos-search">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="search"
+                    id="productosSearch"
+                    placeholder="Buscar producto..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="productos-filter-select">
+
+                <select
+                    id="productosCategoriaFilter"
+                >
+
+                    <option value="">
+                        Todas las categorías
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="productos-filter-select">
+
+                <select
+                    id="productosDemandaFilter"
+                >
+
+                    <option value="">
+                        Toda la demanda
+                    </option>
+
+                    <option value="alta">
+                        Demanda alta
+                    </option>
+
+                    <option value="media">
+                        Demanda media
+                    </option>
+
+                    <option value="baja">
+                        Demanda baja
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- TABLA -->
+
+        <div class="productos-table-wrapper">
+
+            <table
+                class="productos-table"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Producto
+                        </th>
+
+                        <th>
+                            Categoría
+                        </th>
+
+                        <th>
+                            Cotizaciones
+                        </th>
+
+                        <th>
+                            Unidades
+                        </th>
+
+                        <th>
+                            Demanda
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    id="productosTable"
+                >
+                    <!-- JS -->
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ESTADO VACÍO -->
+
+        <div
+            id="productosEmpty"
+            class="productos-empty"
+            hidden
+        >
+
+            <i class="fa-solid fa-seedling"></i>
+
+            <h4>
+                Sin productos registrados
+            </h4>
+
+            <p>
+                Los productos aparecerán aquí cuando
+                existan en las cotizaciones.
+            </p>
+
+        </div>
+
+    </article>
+
+</section>
+
+
+                <!-- =================================================
+                     CONFIGURACIÓN
+                ================================================== -->
+
+                <section
+                    class="dashboard-section"
+                    id="section-configuracion"
+                >
+
+                    <div class="section-intro">
+
+                        <span class="hero-kicker">
+                            SISTEMA
+                        </span>
+
+                        <h2>
+                            Configuración
+                        </h2>
+
+                        <p>
+                            Administración, seguridad y conexiones
+                            del sistema.
+                        </p>
+
+                    </div>
+
+
+                    <div class="module-placeholder">
+
+                        <i class="fa-solid fa-sliders"></i>
+
+                        Configuración del sistema.
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- =========================================================
+         JAVASCRIPT PRINCIPAL
+    ========================================================== -->
+
+    <script src="app.js"></script>
+
+
+</body>
+
+</html>
